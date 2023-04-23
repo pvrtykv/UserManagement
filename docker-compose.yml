@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  user-management:
+    build: .
+    restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - postgres-db
+  postgres-db:
+    image: 'postgres:15-alpine'
+    restart: always
+    container_name: postgres-15
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=userdb
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'db:/var/lib/postgresql/data'
+volumes:
+  db:
